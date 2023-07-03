@@ -3,9 +3,8 @@ package com.shahzaib.finances;
 public class SavingsAccountYear {
 	private int startingBalance = 0;
 	private int interestRate = 0;
-	private int capitalGainsAmount = 0;
 	public int totalWithdrawn = 0;
-	public int startingPrincipal = 0;
+	public int startingPrincipal;
 
 	public SavingsAccountYear() {
 		
@@ -15,12 +14,6 @@ public class SavingsAccountYear {
 		this.startingBalance= startingBalance;
 		this.startingPrincipal= startingPrincipal;
 		this.interestRate = interestRate;
-		this.capitalGainsAmount = startingBalance- startingPrincipal;
-	}
-	
-	public SavingsAccountYear(int startingBalance,int interestRate) {
-		this.startingBalance= startingBalance;
-		this.interestRate = interestRate;
 	}
 	
 	public int startingBalance() {
@@ -28,7 +21,7 @@ public class SavingsAccountYear {
 	}
 	
 	public SavingsAccountYear nextYear(int capitalGainsTaxRate) {
-		return new SavingsAccountYear(this.endingBalance(capitalGainsTaxRate),interestRate);
+		return new SavingsAccountYear(this.endingBalance(capitalGainsTaxRate),0,interestRate);
 	}
 	
 	public int endingBalance(int capitalGainsTaxRate) {
@@ -37,7 +30,11 @@ public class SavingsAccountYear {
 	}
 	
 	public int startingPrincipal() {
-		return startingBalance - capitalGainsAmount;
+		return startingPrincipal;
+	}
+	
+	public int startingCapitalGains() {
+		return startingBalance - startingPrincipal;
 	}
 	
 	public int endingPrincipal() {
@@ -68,5 +65,7 @@ public class SavingsAccountYear {
 		return (int)((dblCapGains/(1-dblTaxRate)) -dblCapGains);
 	}
 
-	
+	public int endingCapitalGains() {
+		return 0;
+	}
 }
