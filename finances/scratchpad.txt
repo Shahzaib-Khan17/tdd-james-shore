@@ -1,2 +1,7 @@
-get rid of SavingsAccountYear initializer
-clean up _SavingAccountYearTest
+change SavingsAccount --> SavingsAccountYear
+Ending balance, other?
+Capital gains
+Replace deposit/withdrawal with transferring between accounts?
+
+Refactor SavingsAccount to reconcile nextYear() with endingBalance()
+Get rid of SavingsAccountYear()
