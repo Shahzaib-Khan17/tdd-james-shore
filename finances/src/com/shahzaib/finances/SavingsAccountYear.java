@@ -57,13 +57,15 @@ public class SavingsAccountYear {
 		return totalWithdrawn;
 	}
 
-	public int capitlGainsWithdrawn() {
+	public int capitalGainsWithdrawn() {
 		int result = -1*(startingPrincipal()-totalWithdrawn());
 		return Math.max(0, result);
 	}
 
 	public int capitalGainsTaxIncurred(int taxRate) {
-		return capitlGainsWithdrawn()*taxRate/100;
+		double dblTaxRate = taxRate/100.0;
+		double dblCapGains = capitalGainsWithdrawn();
+		return (int)((dblCapGains/(1-dblTaxRate)) -dblCapGains);
 	}
 
 	
