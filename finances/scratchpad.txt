@@ -1,9 +1,4 @@
-change SavingsAccount --> SavingsAccountYear
-Ending balance, other?
-Capital gains
-Replace deposit/withdrawal with transferring between accounts?
+Fix primitive obsession
 
-Refactor SavingsAccount to reconcile nextYear() with endingBalance()
-Get rid of SavingsAccountYear()
-
-Fix SavingAccountYearTest.newAccount abstraction -- use it or don't!
+Consider what to do about withdrawing more than the starting balance -- assert that this is impossible?
+We're passing in CapitalGainsTaxRate everywhere -- put it in constructor
