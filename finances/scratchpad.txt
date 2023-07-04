@@ -5,3 +5,5 @@ Replace deposit/withdrawal with transferring between accounts?
 
 Refactor SavingsAccount to reconcile nextYear() with endingBalance()
 Get rid of SavingsAccountYear()
+
+Fix SavingAccountYearTest.newAccount abstraction -- use it or don't!
