@@ -8,7 +8,7 @@ import org.junit.Test;
 public class _StockMarketYearTest {
 
 	private static final InterestRate INTEREST_RATE = new InterestRate(10);
-	private static final int STARTING_PRINCIPAL = 3000;
+	private static final Dollars STARTING_PRINCIPAL = new Dollars(3000);
 	private static final int STARTING_BALANCE = 10000;
 	private static final TaxRate CAPITAL_GAINS_TAX_RATE = new TaxRate(25);
 
@@ -67,7 +67,7 @@ public class _StockMarketYearTest {
 		StockMarketYear thisYear = newYear();
 		StockMarketYear nextYear = thisYear.nextYear();
 		assertEquals("starting balance",thisYear.endingBalance(),nextYear.startingBalance());
-		assertEquals("starting principal",thisYear.endingPrincipal(),nextYear.startingPrincipal());
+		assertEquals("starting principal",thisYear.endingPrincipal(),nextYear.startingPrincipal().amount());
 		assertEquals("interest",thisYear.interestRate(),nextYear.interestRate());
 		assertEquals("capital gains tax rate",thisYear.capitalGainsTaxRate(),nextYear.capitalGainsTaxRate());
 	}
