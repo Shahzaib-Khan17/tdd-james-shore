@@ -1,4 +1,5 @@
 Fix primitive obsession
 
 Consider what to do about withdrawing more than the starting balance -- assert that this is impossible?
-We're passing in CapitalGainsTaxRate everywhere -- put it in constructor
+
+Assert on TaxRate--need to enforce legal values	
