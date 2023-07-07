@@ -2,28 +2,23 @@ package com.shahzaib.finances;
 
 import java.util.Objects;
 
-public class TaxRate {
-	
+public class InterestRate {
+
 	private double rate;
-
-	public TaxRate(double rateAsPercentage) {
-		this.rate = rateAsPercentage /100.0;
-		
+	
+	public InterestRate(int rateAsPercentage) {
+		rate = rateAsPercentage / 100.0;
 	}
-
-	public int simpleTaxFor(int amount) {
-		return (int)(rate *amount);
-	}
-
-	public int compoundTaxFor(int amount) {
-		return (int)((amount/(1-rate))-amount);
+	
+	public int interestOn(int amount) {
+		return (int)(amount * rate);
 	}
 	
 	@Override
 	public String toString() {
 		return (rate * 100) + "%";
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(rate);
@@ -37,7 +32,7 @@ public class TaxRate {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TaxRate other = (TaxRate) obj;
+		InterestRate other = (InterestRate) obj;
 		return Double.doubleToLongBits(rate) == Double.doubleToLongBits(other.rate);
 	}
 

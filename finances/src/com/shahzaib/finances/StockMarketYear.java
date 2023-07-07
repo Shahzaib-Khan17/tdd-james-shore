@@ -2,16 +2,16 @@ package com.shahzaib.finances;
 
 public class StockMarketYear {
 	private int startingBalance ;
-	private int interestRate ;
+	private InterestRate interestRate ;
 	public int totalWithdrawals ;
 	public int startingPrincipal;
-	public int capitalGainsTaxRate;
+	public TaxRate capitalGainsTaxRate;
 
 	public StockMarketYear() {
 		
 	}
 	
-	public StockMarketYear(int startingBalance,int startingPrincipal,int interestRate,int capitalGainsTaxRate) {
+	public StockMarketYear(int startingBalance,int startingPrincipal,InterestRate interestRate,TaxRate capitalGainsTaxRate) {
 		this.startingBalance= startingBalance;
 		this.startingPrincipal= startingPrincipal;
 		this.interestRate = interestRate;
@@ -41,19 +41,18 @@ public class StockMarketYear {
 	}
 	
 	public int interestEarned() {
-		return (startingBalance - totalWithdrawn()) * interestRate/100;
+		return interestRate.interestOn(startingBalance - totalWithdrawn());
 	}
 	
 	public int endingBalance() {
-		int modifiedStart=startingBalance - totalWithdrawn();
-		return modifiedStart + interestEarned();
+		return startingBalance - totalWithdrawn() + interestEarned();
 	}
 	
-	public int interestRate() {
+	public InterestRate interestRate() {
 		return interestRate;
 	}
 	
-	public int capitalGainsTaxRate() {
+	public TaxRate capitalGainsTaxRate() {
 		return capitalGainsTaxRate;
 	}
 	
@@ -67,8 +66,6 @@ public class StockMarketYear {
 	}
 
 	public int capitalGainsTaxIncurred() {
-		double dblTaxRate = capitalGainsTaxRate/100.0;
-		double dblCapGains = capitalGainsWithdrawn();
-		return (int)((dblCapGains/(1-dblTaxRate)) -dblCapGains);
+		return capitalGainsTaxRate.compoundTaxFor(capitalGainsWithdrawn());
 	}
 }
