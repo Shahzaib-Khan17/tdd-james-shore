@@ -9,7 +9,7 @@ public class _StockMarketYearTest {
 
 	private static final InterestRate INTEREST_RATE = new InterestRate(10);
 	private static final Dollars STARTING_PRINCIPAL = new Dollars(3000);
-	private static final int STARTING_BALANCE = 10000;
+	private static final Dollars STARTING_BALANCE = new Dollars(10000);
 	private static final TaxRate CAPITAL_GAINS_TAX_RATE = new TaxRate(25);
 
 
@@ -20,46 +20,46 @@ public class _StockMarketYearTest {
 		assertEquals("starting principal", STARTING_PRINCIPAL, year.startingPrincipal());
 		assertEquals("interest rate",INTEREST_RATE,year.interestRate());
 		assertEquals("capital gains tax rate",CAPITAL_GAINS_TAX_RATE,year.capitalGainsTaxRate());
-		assertEquals("total withdrawn default",0,year.totalWithdrawn());
+		assertEquals("total withdrawn default",new Dollars(0),year.totalWithdrawn());
 	}
 	
 	@Test
 	public void capitalGainsTax() {
 		StockMarketYear year = newYear();
-		year.withdraw(4000);
+		year.withdraw(new Dollars(4000));
 		assertEquals("capital gains tax includes tax on withdrawals to cover capital gains",333,year.capitalGainsTaxIncurred());
-		assertEquals("total withdrawn includes capital gains tax",4333,year.totalWithdrawn());
+		assertEquals("total withdrawn includes capital gains tax",new Dollars(4333),year.totalWithdrawn());
 	}
 	
 	@Test
 	public void interestEarned() {
 		StockMarketYear year = newYear();
 		assertEquals("basic interest earned",1000,year.interestEarned());
-		year.withdraw(2000);
+		year.withdraw(new Dollars(2000));
 		assertEquals("withdrawals don't earn interest",800,year.interestEarned());
-		year.withdraw(2000);
+		year.withdraw(new Dollars(2000));
 		assertEquals("capital gains tax withdrawals don't earn interest",566,year.interestEarned());
 	}
 	
 	@Test
 	public void endingPrincipal() {
 		StockMarketYear year = newYear();
-		year.withdraw(1000);
+		year.withdraw(new Dollars(1000));
 		assertEquals("ending principal considers withdrawals",2000,year.endingPrincipal());
-		year.withdraw(500);
+		year.withdraw(new Dollars(500));
 		assertEquals("ending principal considers total multiple withdrawals",1500,year.endingPrincipal());
-		year.withdraw(3000);
+		year.withdraw(new Dollars(3000));
 		assertEquals("ending principal never goes below zero",0,year.endingPrincipal());
 	}
 	
 	@Test
 	public void endingBalance() {
 		StockMarketYear year = newYear();
-		assertEquals("ending balance includes interest",11000,year.endingBalance());
-		year.withdraw(1000);
-		assertEquals("ending balance includes withdrawals",9900,year.endingBalance());
-		year.withdraw(3000);
-		assertEquals("ending balance includes capital gains tax withdrawals",6233,year.endingBalance());
+		assertEquals("ending balance includes interest",new Dollars(11000),year.endingBalance());
+		year.withdraw(new Dollars(1000));
+		assertEquals("ending balance includes withdrawals",new Dollars(9900),year.endingBalance());
+		year.withdraw(new Dollars(3000));
+		assertEquals("ending balance includes capital gains tax withdrawals",new Dollars(6233),year.endingBalance());
 	}
 	
 	@Test

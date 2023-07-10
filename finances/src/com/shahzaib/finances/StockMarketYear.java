@@ -1,9 +1,9 @@
 package com.shahzaib.finances;
 
 public class StockMarketYear {
-	private int startingBalance ;
+	private Dollars startingBalance ;
 	private InterestRate interestRate ;
-	public int totalWithdrawals ;
+	public Dollars totalWithdrawals ;
 	public Dollars startingPrincipal;
 	public TaxRate capitalGainsTaxRate;
 
@@ -11,15 +11,15 @@ public class StockMarketYear {
 		
 	}
 	
-	public StockMarketYear(int startingBalance,Dollars startingPrincipal,InterestRate interestRate,TaxRate capitalGainsTaxRate) {
+	public StockMarketYear(Dollars startingBalance,Dollars startingPrincipal,InterestRate interestRate,TaxRate capitalGainsTaxRate) {
 		this.startingBalance= startingBalance;
 		this.startingPrincipal= startingPrincipal;
 		this.interestRate = interestRate;
-		this.totalWithdrawals = 0;
+		this.totalWithdrawals = new Dollars(0);
 		this.capitalGainsTaxRate = capitalGainsTaxRate;
 	}
 	
-	public int startingBalance() {
+	public Dollars startingBalance() {
 		return startingBalance;
 	}
 	
@@ -31,20 +31,20 @@ public class StockMarketYear {
 		return startingPrincipal;
 	}
 	
-	public int totalWithdrawn() {
-		return totalWithdrawals + capitalGainsTaxIncurred();
+	public Dollars totalWithdrawn() {
+		return totalWithdrawals.add(new Dollars(capitalGainsTaxIncurred()));
 	}
 	
 	public int endingPrincipal() {
-		return startingPrincipal.subtractToZero(new Dollars(totalWithdrawals)).amount();
+		return startingPrincipal.subtractToZero(totalWithdrawals).amount();
 	}
 	
 	public int interestEarned() {
-		return interestRate.interestOn(startingBalance - totalWithdrawn());
+		return interestRate.interestOn(startingBalance.amount() - totalWithdrawn().amount());
 	}
 	
-	public int endingBalance() {
-		return startingBalance - totalWithdrawn() + interestEarned();
+	public Dollars endingBalance() {
+		return startingBalance.subtract(totalWithdrawn()).add(new Dollars(interestEarned()));
 	}
 	
 	public InterestRate interestRate() {
@@ -55,16 +55,16 @@ public class StockMarketYear {
 		return capitalGainsTaxRate;
 	}
 	
-	public void withdraw(int amount) {
-		this.totalWithdrawals += amount;
+	public void withdraw(Dollars amount) {
+		// TODO: Convert amount to dollars
+		this.totalWithdrawals = totalWithdrawals.add(amount);
 	}
 
-	private int capitalGainsWithdrawn() {
-		int result = -1*(startingPrincipal().amount()-totalWithdrawals);
-		return Math.max(0, result);
+	private Dollars capitalGainsWithdrawn() {
+		return totalWithdrawals.subtractToZero(startingPrincipal());
 	}
 
 	public int capitalGainsTaxIncurred() {
-		return capitalGainsTaxRate.compoundTaxFor(capitalGainsWithdrawn());
+		return capitalGainsTaxRate.compoundTaxFor(capitalGainsWithdrawn().amount());
 	}
 }
